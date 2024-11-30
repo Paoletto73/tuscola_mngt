@@ -1,0 +1,89 @@
+<html>
+<head>
+	<title>Tuscola - Sistema Prenotazioni Eventi - Login Page</title>
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<!-- include la libreria di hash della password -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+				<div class="card card-signin my-5">
+					<img class="card-img-top" src="../img/tuscolapc.png" alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-title text-center">Login</h5>
+						<form id="loginForm">
+						<div class="form-label-group">							
+							<input type="email" class="form-control" id="email" name="email" placeholder="Mail" maxlength="50" autofocus required>
+						</div>
+						<p></p>
+						<div class="form-label-group">
+							<input type="password" class="form-control" id="password" name="password" placeholder="Password" maxlength="15" required>
+						</div>
+						<p></p>
+						<button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Login</button>
+						<hr class="my-4">
+						<div class="form-label-group">
+							<a href="register.html" class="link-underline-primary text-center">Se non sei registrato clicca qui</a>
+						</div>
+						<div class="form-label-group" id="messaggi"></div>
+						</form>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+    <script>
+			document.getElementById('loginForm').addEventListener('submit', async function(event) {
+				event.preventDefault();
+
+				const email = document.getElementById('email').value.toLowerCase();
+				const password = document.getElementById('password').value;
+
+				const messaggiDiv = document.getElementById('messaggi');
+
+				// verifica se i campi sono stati compilati
+				if (!password || !email) {
+					messaggiDiv.style.color = 'red';
+					messaggiDiv.textContent = 'Attenzione. Riempire tutti i campi.';
+					return;
+				}
+
+				try{
+					const response = await fetch('http://localhost:5000/login', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ email, password })
+					});
+
+					const data = await response.json();
+					const messaggiDiv = document.getElementById('messaggi');
+
+					if (data.message) {
+						// autenticazione andata a buon fine
+						// Imposta i valori del sessionStorage
+						sessionStorage.setItem('idUser', data.idUser);
+						sessionStorage.setItem('nomeUtente', data.nomeUtente);
+
+						// Poi apre la schermata principale index.html
+						window.location.href = `../index.html`;
+					} else if (data.error) {
+						// restituisce il messaggio di errore nella div apposita
+						messaggiDiv.style.color = 'red';
+						messaggiDiv.textContent = data.error;
+					}					
+				
+				} catch (error) {
+					// restituisce il messaggio di errore nella div apposita
+					messaggiDiv.style.color = 'red';
+					messaggiDiv.textContent = 'Login errato. Riprovare';
+    			}		
+
+			});
+    </script>
+</body>
+</html>

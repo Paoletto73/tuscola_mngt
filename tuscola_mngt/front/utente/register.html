@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title>Tuscola - Sistema Prenotazioni Eventi - Registration Page</title>
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<!-- include la libreria di hash della password -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+	<script src="../js/script.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+				<div class="card card-signin my-5">
+					<img class="card-img-top" src="../img/tuscolapc.png" alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-title text-center">Login</h5>
+						<div class="form-label-group">
+							<input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" maxlength="50" autofocus required>
+						</div>
+						<p></p>
+						<div class="form-label-group">
+							<input type="text" class="form-control" id="cognome" name="cognome" placeholder="Cognome" maxlength="50" required>
+						</div>
+						<p></p>
+						<div class="form-label-group">
+							<input type="email" class="form-control" id="email" name="email" placeholder="Mail" maxlength="50" required>
+						</div>
+						<p></p>
+						<div class="form-label-group">
+							<input type="password" class="form-control" id="password" name="password" maxlength="15" placeholder="Password">
+						</div>
+						<p></p>
+						<button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" onclick="registraUtente()">Registra</button>
+						<hr class="my-4">
+						<div class="form-label-group" id="messaggi"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

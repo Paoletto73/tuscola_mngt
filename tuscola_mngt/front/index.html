@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tuscola - Sistema Prenotazioni Eventi</title>
+  <!-- includo i fogli di stile tra cui bootstrap-->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/allx.css" >
+  <!--includo il mosaico della pagina principale-->
+  <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+  <script src="js/script.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js" ></script>
+</head>
+<body>
+  <!-- creo la navbar nella parte alta dell pagina-->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light"  style="background-color: #f9f9fb;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Menù
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="index.html">Lista Eventi</a>
+            <div class="dropdown-divider"></div>	
+            <a class="dropdown-item" href="utente/login.html" id="linkLogin">Login</a>
+            <a class="dropdown-item" href="utente/logout.html" id="linkLogout">Logout</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="navbar-brand" id="userName"></div>
+    <div class="d-flex">
+      <!-- Creo il campo di ricerca dove l'utente puo' inserire il valore da ricercare nel titolo dell evento-->
+      <div class="input-group">
+        <input class="form-control" type="search" placeholder="Ricerca" aria-label="Search" maxlength="20" id="txtRicerca">
+        <button class="btn btn-outline-secondary" type="button" onclick="ricercaEventi()">Ricerca</button>
+      </div>
+    </div>
+  </nav>
+  <main class="container py-5">
+    <div class="row" data-masonry="{&quot;percentPosition&quot;: true }" style="position: relative; height: 1068px;" id="container-eventi">
+        <!-- Questa div impostata come mosaico si riempie con l Elenco degli eventi disponibili a sistema dalla data di oggi, i dati vengono restituiti dall'api-->
+    </div>
+  </main>
+  <div class="fixed-bottom">
+    <footer class="py-3 my-4">
+      <p class="text-center text-muted">© 2024 Tuscola</p>
+    </footer>
+  </div>
+</body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    elencoEventi("");
+
+    const nomeUtente = sessionStorage.getItem('nomeUtente');
+
+    if (nomeUtente !== null) {
+      document.getElementById("userName").innerText = "Ciao " + primaMaiuscola(nomeUtente) + " !";
+      document.getElementById("linkLogin").style.display = "none";
+      document.getElementById("linkLogout").style.display = "block";
+    }else{
+      document.getElementById("userName").innerText = "Utente non connesso";
+      document.getElementById("linkLogin").style.display = "block";
+      document.getElementById("linkLogout").style.display = "none";
+    }
+
+  });
+</script>
+
+</html>
